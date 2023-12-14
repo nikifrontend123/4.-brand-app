@@ -10,61 +10,43 @@
                 <i class="bi bi-list fs-5 text-white" type="button" @click="toggleOffcanvas"></i>
             </div>
             <div class="offcanvas offcanvas-end" tabindex="-1" :class="{ 'show': isOffcanvasOpen }">
-                <div class="offcanvas-header">
+                <div class="offcanvas-header border-bottom py-2">
                     <h5 id="offcanvasRightLabel">Menu</h5>
                     <button type="button" class="btn-close" @click="closeOffcanvas"></button>
                 </div>
                 <div class="offcanvas-body p-0">
-
-                    <RouterLink to="/" class="text-decoration-none text-dark">
-                        <div class="d-flex border-bottom my-2 p-2 fs-4">
-                            <i class="bi bi-speedometer me-2"></i>
-                            <span>Dashboard</span>
-                        </div>
-                    </RouterLink>
-                    <RouterLink to="/Catalog" class="text-decoration-none text-dark">
-                        <div class="d-flex border-bottom my-2 p-2 fs-4">
-                            <i class="bi bi-layers me-2"></i>
-                            <span>Store</span>
-                        </div>
-                    </RouterLink>
-                    <RouterLink to="/PoPage" class="text-decoration-none text-dark">
-                        <div class="d-flex border-bottom my-2 p-2 fs-4">
-                            <i class="bi bi-journal-arrow-up me-2"></i>
-                            <span>PO + Purchased</span>
-                        </div>
-                    </RouterLink>
-                    <!-- <RouterLink to="/PurchasePage" class="text-decoration-none text-dark">
-                        <div class="d-flex border-bottom my-2 p-2 fs-4">
-                            <i class="bi bi-journal-arrow-down me-2"></i>
-                            <span>Purchase</span>
-                        </div>
-                    </RouterLink> -->
-                     <RouterLink to="/SalesOrder" class="text-decoration-none text-dark">
-                        <div class="d-flex border-bottom my-2 p-2 fs-4">
-                            <i class="bi bi-send me-2"></i>
-                            <span>Sales</span>
-                        </div>
-                    </RouterLink>
-                    <RouterLink to="/SupplierForm" class="text-decoration-none text-dark">
-                        <div class="d-flex border-bottom my-2 p-2 fs-4">
-                            <i class="bi bi-speedometer me-2"></i>
-                            <span>Manage</span>
-                        </div>
-                    </RouterLink>
-                    <!--<RouterLink to="/ProfilePage" class="text-decoration-none text-dark">
-                        <div class="d-flex border-bottom my-2 p-2 fs-4">
-                            <i class="bi bi-person me-2"></i>
-                            <span>Profile</span>
-                        </div>
-                    </RouterLink> -->
-                    <RouterLink to="/SupplierPage" class="text-decoration-none text-dark">
-                        <div class="d-flex border-bottom my-2 p-2 fs-4">
-                            <i class="bi bi-person me-2"></i>
-                            <span>Supplier</span>
-                        </div>
-                    </RouterLink>
-
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <router-link to="/" class="text-decoration-none text-dark">
+                                <i class="bi bi-house me-2"></i>
+                                <span>Dashboard</span>
+                            </router-link>
+                        </li>
+                        <li class="list-group-item">
+                            <router-link to="/Catalog" class="text-decoration-none text-dark">
+                                <i class="bi bi-layers me-2"></i>
+                                <span>Store</span>
+                            </router-link>
+                        </li>
+                        <li class="list-group-item">
+                            <router-link to="/PoPage" class="text-decoration-none text-dark">
+                                <i class="bi bi-journal-arrow-up me-2"></i>
+                                <span>PO + Purchased</span>
+                            </router-link>
+                        </li>
+                        <li class="list-group-item">
+                            <router-link to="/SalesOrder" class="text-decoration-none text-dark">
+                                <i class="bi bi-send me-2"></i>
+                                <span>Sales</span>
+                            </router-link>
+                        </li>
+                        <li class="list-group-item border-bottom">
+                            <router-link to="/SupplierForm" class="text-decoration-none text-dark">
+                                <i class="bi bi-speedometer me-2"></i>
+                                <span>Manage</span>
+                            </router-link>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

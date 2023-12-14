@@ -1,18 +1,21 @@
-<template> 
+<template>
     <div class="container">
-        <h2>Customer Form</h2>
-
         <div class="border my-2" v-for="(fab, index) in suppliers" :key="index">
             <div class="d-flex gap-3 my-2">
-                <img :src="fab.img" style="height: 150px; width: 150px;">
-                <div class="">
+                <img :src="fab.img" style="height: 100px; width: 100px;">
+                <div class="flex-fill">
                     <div class="">
-                        <p>{{ fab.name }}</p>
-                        <p>Email: {{ fab.email }}</p>
-                        <p>Contact: {{ fab.contact }}</p>
+                        <p class="mb-0">{{ fab.name }}</p>
+                        <p class="mb-0">Email: {{ fab.email }}</p>
+                        <p class="mb-0">Contact: {{ fab.contact }}</p>
+                    </div>
+                    <div class="d-flex justify-content-end gap-3 px-3 mt-2">
+                        <i class="bi bi-pencil btn btn-light"></i>
+                        <i class="bi bi-telephone btn btn-light"></i>
+                        <i class="bi bi-whatsapp btn btn-light"></i>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
         <button class="btn btn-primary rounded-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
             aria-controls="staticBackdrop">
@@ -46,7 +49,7 @@
                         <input type="password" class="form-control" id="password" placeholder="name@example.com"
                             v-model="form.password">
                         <label for="password">Password</label>
-                    </div> 
+                    </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -58,7 +61,7 @@
     </div>
 </template>
 
-<script> 
+<script>
 import ManageNav from '@/components/Navbar/ManageNav.vue'
 export default {
     data() {
@@ -88,7 +91,7 @@ export default {
             });
         },
     },
-    components: { ManageNav  }
+    components: { ManageNav }
 }
 </script>
 

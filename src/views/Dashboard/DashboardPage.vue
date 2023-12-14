@@ -103,6 +103,8 @@
 
 <script>
 
+
+
 export default {
     name:'DashboardPage',
     data(){
@@ -144,7 +146,7 @@ export default {
             ]
         }
     },
-    components: {},
+    
     computed: {
         datas() {
             return this.$store.getters.getDatas;

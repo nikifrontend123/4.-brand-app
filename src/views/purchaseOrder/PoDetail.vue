@@ -33,11 +33,10 @@
                         <th scope="row">Name</th>
                         <td class="text-muted w-50">{{ dataSet.name }}</td>
                     </tr>
-                    <tr>
-                        <!-- <th scope="row">Sale Price</th> -->
+                    <!-- <tr>
                         <th scope="row">Message</th>
                         <td class="text-muted">{{ dataSet.message }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th scope="row">Fc / Piece</th>
                         <td class="text-muted">{{ dataSet.fc }}</td>

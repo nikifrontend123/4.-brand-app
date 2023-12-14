@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/",
+    name: "FirstPage",
+    component: () => import('@/components/FirstPage/FirstPage.vue')
+  },
+  {
+    path: "/dashboard",
     name: "DashboardPage",
     component: () => import('@/views/Dashboard/DashboardPage.vue')
   },

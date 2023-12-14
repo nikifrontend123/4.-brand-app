@@ -17,8 +17,6 @@
         <div class="position-fixed bottom-0 text-center w-100">
             <StoreNav></StoreNav>
         </div>
-
-
     </div>
 </template>
 

@@ -1,76 +1,95 @@
 <template>
-    <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"
-        class="btn btn-warning my-3 rounded-circle ">
-        <i class="bi bi-plus-lg fs-4"></i>
-    </button>
+    <div class="navshadow">
+        <nav class="navbar fixed-bottom navbar-light bg-light" :class="{ 'navbar-hidden': navbarHidden }">
+            <div id="mobile bottomNav">
+                <div class="bnav d-flex h-100">
+                    <div class="bottom-nav w-100 position-fixed " style="bottom: 0px;">
+                        <div class="bottom-nav w-100 position-absolute" style="height: 5%;">
+                            <div class="btn-front position-absolute d-flex justify-content-evenly w-100 pt-2"
+                                style="bottom:0; width: 100%; background-color: #F48B29; ">
+                                <div class="d-grid">
+                                    <RouterLink to="/SupplierForm" :class="{ 'text-white': currentRoute === 'SupplierForm' }"
+                                        style="text-decoration:none;color:black;text-align: center;">
+                                        <i class="bi bi-house-door fs-4"></i>
+                                        <p class='mb-1' style="font-size: 14px;">Supplier</p>
+                                    </RouterLink>
+                                </div>
+                                <div class="d-grid">
+                                    <RouterLink to="/CustomerPage"
+                                        :class="{ 'text-white': currentRoute === 'CustomerPage' }"
+                                        style="text-decoration:none;color:black;text-align: center;">
+                                        <i class="bi bi-send fs-4"></i>
+                                        <p class='mb-1' style="font-size: 14px;margin: 0">Customer</p>
+                                    </RouterLink>
+                                </div>
+                                <div class="d-grid">
+                                    <RouterLink to="/FabricatorForm"
+                                        :class="{ 'text-white': currentRoute === 'FabricatorForm' }"
+                                        style="text-decoration:none;color:black;text-align: center;">
+                                        <i class="bi bi-journal-arrow-up fs-4"></i>
+                                        <p class='mb-1' style="font-size: 14px;margin: 0">Fabricator</p>
+                                    </RouterLink>
+                                </div>
+                                <div class="d-grid">
+                                    <RouterLink to="/MembersPage" :class="{ 'text-white': currentRoute === 'MembersPage' }"
+                                        style="text-decoration:none;color:black;text-align: center;">
+                                        <i class="bi bi-layers fs-4"></i>
+                                        <p class='mb-1' style="font-size: 14px;">Members</p>
+                                    </RouterLink>
+                                </div>
 
-
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header d-flex justify-content-center align-items-center">
-            <button class="rounded-circle btn btn-danger position-absolute start-50 translate-middle-x" style="top: -23px;"
-                data-bs-dismiss="offcanvas">
-                <i class="bi bi-x-lg fs-4"></i>
-            </button>
-        </div>
-        <div class="offcanvas-body small">
-            <div class="row row-cols-2 text-center">
-            <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/SupplierForm" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Supplier</span>
-                </router-link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/CustomerPage" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Customer</span>
-                </router-link>
-            </div>
-            <!-- <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/DeliveryForm" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Delivery</span>
-                </router-link>
-            </div> -->
-            <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/FabricatorForm" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Fabricator</span>
-                </router-link>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/MembersPage" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Members</span>
-                </router-link>
-            </div>
-            <!-- <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/OrderForm" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Order</span>
-                </router-link>
-            </div> -->
-            <!-- <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/PaymentForm" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Paymnet</span>
-                </router-link>
-            </div> -->
-        </div>
-        </div>
+        </nav>
     </div>
-
-
-
-
-
-
-
- 
 </template>
   
-<script>
-export default {
-
-}
-</script>
+  <script>
+  export default {
+    data() {
+      return {
+        prevScroll: window.pageYOffset,
+        navbarHidden: false
+      };
+    },
+    computed: {
+      currentRoute() {
+        return this.$route.name;
+      }
+    },
+    mounted() {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+      handleScroll() {
+        const currentScroll = window.pageYOffset;
+        if (this.prevScroll > currentScroll) {
+          this.navbarHidden = false;
+        } else {
+          this.navbarHidden = true;
+        }
+        this.prevScroll = currentScroll;
+      },
+    }
+  };
+  </script>
   
-<style lang="scss" scoped>
-.active-link {
-    color: #F48B29 !important;
+<style scoped>
+.navbar {
+    background-color: #f1f1f1;
+    height: 72px;
+    transition: transform 0.5s;
+    transform: translateY(0);
+}
+
+.navbar-hidden {
+    transform: translateY(100%);
+}
+
+.navshadow {
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 </style>
-  

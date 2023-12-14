@@ -25,8 +25,7 @@
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
                         <div v-for="(message, index) in purchase.message" :key="index">
-                            <div class="message mt-3 mb-2 d-flex flex-column"
-                                 >
+                            <div class="message mt-3 mb-2 d-flex flex-column">
                                 <div class="d-flex align-items-center w-100">
                                     <div class="message-content border w-100"
                                         style="background-color: #F48B29;word-wrap: break-word; padding: 10px !important; border-radius: 8px; border-top-right-radius: 15px; border-bottom-left-radius: 15px; border-bottom-right-radius: 0px !important; color: white;">
@@ -44,10 +43,13 @@
             </div>
 
             <div class="mb-2">
-                <button class="btn d-flex justify-content-between w-100 rounded-0 py-2 text-white"
+                <button class="btn d-flex justify-content-between w-100 rounded-0 py-2 text-white" @click="toggleOrder"
                     style="background-color: #F48B29;" data-bs-toggle="collapse" href="#summary" role="button"
                     aria-expanded="false" aria-controls="summary">
-                    Show Order Summary
+                    <span> Show Order Summary</span>
+                    <span>
+                        <i :class="iconClassOrder"></i>
+                    </span>
                 </button>
                 <div class="collapse" id="summary" v-if="purchase.log_status_time">
                     <div v-for="(log, logIndex) in purchase.log_status_time" :key="logIndex" class="px-2">
@@ -128,10 +130,13 @@
             </div>
 
             <div class="">
-                <button class="btn d-flex justify-content-between w-100 rounded-0 py-2 text-white"
+                <button class="btn d-flex justify-content-between w-100 rounded-0 py-2 text-white" @click="toggle"
                     style="background-color: #F48B29;" data-bs-toggle="collapse" href="#Details" role="button"
                     aria-expanded="false" aria-controls="Details">
-                    Extra Details
+                    <span>Extra Details</span>
+                    <span>
+                        <i :class="iconClass"></i>
+                    </span>
                 </button>
                 <div class="collapse" id="Details">
                     <table v-if="this.purchase.loss_quantities" class="table table-responsive">
@@ -177,12 +182,28 @@ export default {
         return {
             purchase: {},
             completedTime: null,
+            isExpanded: false,
+            isExpandedOrder: false,
         }
+    },
+    computed: {
+        iconClass() {
+            return this.isExpanded ? "bi bi-chevron-up" : "bi bi-chevron-down";
+        },
+        iconClassOrder() {
+            return this.isExpandedOrder ? "bi bi-chevron-up" : "bi bi-chevron-down";
+        },
     },
     methods: {
         formatDate(dateString) {
             const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
             return new Date(dateString).toLocaleDateString('en-US', options);
+        },
+        toggle() {
+            this.isExpanded = !this.isExpanded;
+        },
+        toggleOrder() {
+            this.isExpandedOrder = !this.isExpandedOrder;
         },
     },
     mounted() {
@@ -207,7 +228,7 @@ export default {
 </script>
 <style scoped>
 /* Add the CSS animation and class here */
-@keyframes bounce {
+/* @keyframes bounce {
 
     0%,
     20%,
@@ -224,9 +245,10 @@ export default {
     60% {
         transform: translateY(-15px);
     }
-}
+} */
 
 .bounce {
     animation: bounce 1s infinite;
-}</style>
+}
+</style>
   

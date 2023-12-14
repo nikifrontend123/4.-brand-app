@@ -1,61 +1,93 @@
 <template>
-    <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"
-        class="btn btn-primary my-3 rounded-circle ">
-        <i class="bi bi-plus-lg fs-4"></i>
-    </button>
-
-
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header d-flex justify-content-center align-items-center">
-            <button class="rounded-circle btn btn-danger position-absolute start-50 translate-middle-x" style="top: -23px;"
-                data-bs-dismiss="offcanvas">
-                <i class="bi bi-x-lg fs-4"></i>
-            </button>
+    <div class="navshadow">
+      <nav class="navbar fixed-bottom navbar-light" :class="{ 'navbar-hidden': navbarHidden }">
+        <div id="mobile bottomNav">
+          <div class="bnav d-flex h-100">
+            <div class="bottom-nav w-100 position-fixed " style="bottom: 0px;">
+              <div class="bottom-nav w-100 position-absolute" style="height: 5%;">
+                <div class="btn-front position-absolute d-flex justify-content-evenly w-100 pt-2"
+                  style="bottom:0; width: 100%; background-color: #F48B29; ">
+                  <div class="d-grid">
+                    <RouterLink to="/PoPage" :class="{ 'text-white': currentRoute === 'PoPage' }"
+                      style="text-decoration:none;color:black;text-align: center;">
+                      <i class="bi bi-house-door fs-4"></i>
+                      <p class='mb-1' style="font-size: 14px;">New PO</p>
+                    </RouterLink>
+                  </div>
+                  <div class="d-grid">
+                    <RouterLink to="/ProductionPage" :class="{ 'text-white': currentRoute === 'ProductionPage' }"
+                      style="text-decoration:none;color:black;text-align: center;">
+                      <i class="bi bi-send fs-4"></i>
+                      <p class='mb-1' style="font-size: 14px;margin: 0">Purchase</p>
+                    </RouterLink>
+                  </div>
+                  <div class="d-grid">
+                    <RouterLink to="/DispatchedPage" :class="{ 'text-white': currentRoute === 'DispatchedPage' }"
+                      style="text-decoration:none;color:black;text-align: center;">
+                      <i class="bi bi-journal-arrow-up fs-4"></i>
+                      <p class='mb-1' style="font-size: 14px;margin: 0">Production</p>
+                    </RouterLink>
+                  </div>
+                  <div class="d-grid">
+                    <RouterLink to="/CompletedPage" :class="{ 'text-white': currentRoute === 'CompletedPage' }"
+                      style="text-decoration:none;color:black;text-align: center;">
+                      <i class="bi bi-layers fs-4"></i>
+                      <p class='mb-1' style="font-size: 14px;">Completed</p>
+                    </RouterLink>
+                  </div>
+                   
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="offcanvas-body small">
-            <div class="row row-cols-2 text-center">
-            <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/PoPage" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">New PO</span>
-                </router-link>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/ProductionPage" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Purchase</span>
-                </router-link>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/DispatchedPage" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Production</span>
-                </router-link>
-            </div>
-            <div class="col border d-flex justify-content-center align-items-center">
-                <router-link to="/CompletedPage" class="text-decoration-none text-dark" exact-active-class="active-link">
-                    <span class="fs-5 p-2">Completed</span>
-                </router-link>
-            </div>
-        </div>
-        </div>
+      </nav>
     </div>
-
-
-
-
-
-
-
- 
-</template>
+  </template>
   
-<script>
-export default {
-
-}
-</script>
+  <script>
+  export default {
+    data() {
+      return {
+        prevScroll: window.pageYOffset,
+        navbarHidden: false
+      };
+    },
+    computed: {
+      currentRoute() {
+        return this.$route.name;
+      }
+    },
+    mounted() {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+      handleScroll() {
+        const currentScroll = window.pageYOffset;
+        if (this.prevScroll > currentScroll) {
+          this.navbarHidden = false;
+        } else {
+          this.navbarHidden = true;
+        }
+        this.prevScroll = currentScroll;
+      },
+    }
+  };
+  </script>
   
-<style lang="scss" scoped>
-.active-link {
-    color: #F48B29 !important;
-}
-</style>
+  <style scoped>
+  .navbar {
+    background-color: #F48B29;
+    height: 72px;
+    transition: transform 0.5s;
+    transform: translateY(0);
+  }
   
+  .navbar-hidden {
+    transform: translateY(100%);
+  }
+  
+  .navshadow {
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  }
+  </style>

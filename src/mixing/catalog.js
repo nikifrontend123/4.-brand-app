@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 const catalog = {
     mounted() {
         this.delivery_date = this.defaultDeliveryDate;
@@ -82,26 +82,18 @@ const catalog = {
         //     // }
         // },
 
-
-
         postData() {
-            // Create an array to hold the quantities data
             const quantitiesArray = [];
-
-            // Iterate over colors and sizes to build the quantities array
+        
             this.dataSet.product.options.forEach((color) => {
                 this.dataSet.product.ranges.forEach((size) => {
                     const key = `${color.sid}_${size.sid}`;
-
-                    // Create an object with the color and size combination
                     const quantityObject = {};
-                    quantityObject[key] = this.advance[key] || 0; // Use 0 if the quantity is undefined
-
+                    quantityObject[key] = this.advance[key] || 0;
                     quantitiesArray.push(quantityObject);
                 });
             });
-
-            // Create the requestData object
+        
             const requestData = {
                 product_sid: this.dataSet.product.sid,
                 quantities: JSON.stringify(quantitiesArray),
@@ -109,15 +101,28 @@ const catalog = {
                 message: this.message,
                 expected_at: this.delivery_date,
             };
-
+        
             axios.post('http://192.168.1.133:8001/api/purchaseorders', requestData)
                 .then((response) => {
-                    console.log('api response', response);
+                    console.log('api response', response); 
+                    Swal.fire({
+                        title: 'Yay!',
+                        text: 'Your Job Work Issued Successfully.',
+                        icon: 'success',
+                        confirmButtonColor: '#F48B29',
+                        confirmButtonText: 'OK'
+                    }); 
                 })
                 .catch((error) => {
-                    console.error(error);
+                    console.error('Error posting data:', error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while posting data. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
-        },
+        },  
         toggleColor(color) {
             color.isSelected = !color.isSelected;
             if (!color.isSelected) {
@@ -194,6 +199,35 @@ const catalog = {
                 }
             }
         },
+
+        // calculateAdvanceAndRegularDistribution() {
+        //     const selectedColors = this.dataSet.product.options.filter((color) => color.isSelected);
+        //     const selectedSizes = this.dataSet.product.ranges.filter((size) => size.isSelected);
+        //     const totalSelectedColors = selectedColors.length;
+        //     const totalSelectedSizes = selectedSizes.length;
+        //     const totalSelected = totalSelectedColors * totalSelectedSizes;
+        
+        //     // Reset all quantities to 0
+        //     for (const color of this.dataSet.product.options) {
+        //         for (const size of this.dataSet.product.ranges) {
+        //             this.advance[`${color.sid}_${size.sid}`] = 0;
+        //             this.regular[`0_${size.sid}`] = 0;
+        //         }
+        //     }
+        
+        //     if (totalSelected > 0) {
+        //         // Calculate and distribute the quantity among selected colors and sizes
+        //         const quantityPerItem = Math.round(this.quantity / totalSelected);
+        
+        //         for (const color of selectedColors) {
+        //             for (const size of selectedSizes) {
+        //                 this.advance[`${color.sid}_${size.sid}`] = quantityPerItem;
+        //                 this.regular[`0_${size.sid}`] = quantityPerItem;
+        //             }
+        //         }
+        //     }
+        // },        
+        
         calculateRegularAndAdvance(value) {
             const dividedValueBySizes = parseInt(value) / this.dataSet.product.ranges.length;
             const dividedValueByColorAndSizes = parseInt(value) / (this.dataSet.product.ranges.length * this.dataSet.product.options.length);
@@ -209,21 +243,32 @@ const catalog = {
         calculateRegularSizeTotal() {
             let total = 0;
             this.dataSet.product.ranges.forEach((size) => {
-                // console.warn(sizeIndex)
-                total += parseInt(this.regular[`0_${size.sid}`]);
+                const quantity = parseInt(this.regular[`0_${size.sid}`]); 
+                if (!isNaN(quantity)) {
+                    total += quantity;
+                } else {
+                    total += 0;
+                }
             });
             return total;
         },
         calculateAdvanceSizeTotal() {
             let total = 0;
-
             // Iterate over colors and sizes
             this.dataSet.product.options.forEach((color) => {
                 this.dataSet.product.ranges.forEach((size) => {
-                    total += parseInt(this.advance[`${color.sid}_${size.sid}`]);
+                    const quantity = parseInt(this.advance[`${color.sid}_${size.sid}`]);
+        
+                    // Check if quantity is a valid number
+                    if (!isNaN(quantity)) {
+                        total += quantity;
+                    } else {
+                        // If quantity is NaN, treat it as 0
+                        total += 0;
+                    }
                 });
             });
-
+        
             return total;
         },
         calculateAdvanceTotal(footSizeindex) {

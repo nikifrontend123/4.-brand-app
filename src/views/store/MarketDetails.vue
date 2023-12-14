@@ -9,7 +9,7 @@
                     <button style="background-color:  rgb(244, 139, 41);" class="accordion-button text-white" type="button"
                         data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                         aria-controls="collapseOne">
-                        {{ list.sid }} &nbsp; <b>{{ list.styleid }}</b>
+                        {{ list.name }} &nbsp; <b>{{ list.styleid }}</b>
                     </button>
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -87,7 +87,7 @@
                 Remove
             </button>
              <!-- Add Button -->
-             <button v-else class="btn rounded-0 w-100 p-0 btn-success"
+             <button v-else class="btn w-100 top-brand" 
                 @click="toggleMarketAddedToList(list); postData(list)">
                 Add +
             </button>
@@ -97,7 +97,7 @@
 
 <script>
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 export default {
     data() {
         return {
@@ -141,18 +141,66 @@ export default {
         },
 
         toggleMarketAddedToList(list) {
-            if (list.addedToList) {
-                // Handle removing from the list
-                this.$store.dispatch('removeFromList', list); 
-            } else {
-                // Handle adding to the list
-                this.$store.dispatch('addToList', list);  
-            }
-            list.addedToList = !list.addedToList;
-        },
+        if (list.addedToList) {
+            // Handle removing from the list
+            this.$store.dispatch('removeFromList', list)
+                .then(() => {
+                    // Show success SweetAlert on successful removal
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Item removed from the list successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error removing from the list:', error);
+
+                    // Show error SweetAlert on removal error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while removing from the list. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        } else {
+            // Handle adding to the list
+            this.$store.dispatch('addToList', list)
+                .then(() => {
+                    // Show success SweetAlert on successful addition
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Item added to the list successfully.',
+                        icon: 'success',
+                        confirmButtonColor: '#F48B29',
+                        confirmButtonText: 'OK'
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error adding to the list:', error);
+
+                    // Show error SweetAlert on addition error
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while adding to the list. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        }
+        list.addedToList = !list.addedToList;
+    },
 
     }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.top-brand {
+  background-color: #F48B29;
+  color: white;
+  --bs-btn-hover-border-color: none !important;
+}
+
+</style>

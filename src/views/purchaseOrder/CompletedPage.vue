@@ -1,9 +1,9 @@
 <template>
     <div style="margin-bottom: 70px;">
-        <p class="p-2 text-center mb-0 fw-bold bg-light">Completed Order</p>
+        <FabFilter class="border-bottom"></FabFilter>
+        <p class="p-2 text-center mb-0 bg-light bill"><span>~ Completed Order ~</span></p>
 
         <div v-if="Object.keys(filteredPurchases).length">
-            <FabFilter class="border-bottom"></FabFilter>
             <div v-for="(purchase, index) in filteredPurchases" :key="index">
                 <div class="d-flex align-items-center justify-content-between p-1 border-bottom w-100">
                     <router-link :to="'/CompleteDetail/' + purchase.sid" class="text-decoration-none text-dark ">

@@ -9,7 +9,7 @@
                                 class="rounded-circle border border-1 d-flex justify-content-center align-items-center"
                                 style="height:60px; width:60px;object-fit: fill;">
                             <div class="d-flex flex-column  justify-content-center">
-                                <span class="fw-bold mx-2 fs-5">{{ list.product.sid }}</span>
+                                <span class="fw-bold mx-2 fs-5 ss">{{ list.product.name }}</span>
                                 <span class="mx-2">Stock : {{ list.stock }} pcs</span>
                             </div>
                         </div>
@@ -56,3 +56,11 @@ export default {
 
 }
 </script>
+<style scoped>
+.ss {
+    width: 200px; /* Set the width based on your requirements */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>

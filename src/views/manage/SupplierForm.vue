@@ -11,17 +11,15 @@
             <div class="d-flex gap-3 my-2">
                 <img :src="fab.img" style="height: 100px; width: 100px;">
                 <div class="">
-                    <div class="">
-                        <p class="mb-0">{{ fab.name }}</p>
-                        <p class="mb-0">Role: {{ fab.role }}</p>
-                        <p class="mb-0">Status: {{ fab.status }}</p>
-                    </div>
+                    <p class="mb-0">{{ fab.name }}</p>
+                    <p class="mb-0">Role: {{ fab.role }}</p>
+                    <p class="mb-0">Status: {{ fab.status }}</p>
                 </div>
-            </div>
-            <div class="btn-group d-flex flex-fill rounded-0" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary"><i class="bi bi-telephone"></i> Make a Call</button>
-                <button type="button" class="btn btn-primary"><i class="bi bi-whatsapp"></i> Send Message</button>
-                <button type="button" class="btn btn-primary"><i class="bi bi-shield-check"></i> Edit</button>
+                <div class="flex-fill d-flex flex-column justify-content-between text-end px-3">
+                    <i class="bi bi-pencil"></i>
+                    <i class="bi bi-telephone"></i>
+                    <i class="bi bi-whatsapp"></i>
+                </div>
             </div>
         </div>
 

@@ -1,7 +1,7 @@
 <template>
-    <FabFilter></FabFilter>
-    <div class="container py-3" style="padding-bottom:100px">
-        <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-2">
+    <div class="container" style="padding-bottom: 120px;">
+        <FabFilter></FabFilter>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-2 ">
             <div class="col" v-for="(list, index) in markets" :key="index">
                 <div class="card border ">
                     <router-link :to="'/MarketDetails/' + list.sid" class="text-decoration-none">
@@ -30,10 +30,10 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="position-fixed bottom-0 text-center w-100">
-        <StoreNav></StoreNav>
+        <div class="position-fixed bottom-0 text-center w-100">
+            <StoreNav></StoreNav>
+        </div>
     </div>
 </template>
 

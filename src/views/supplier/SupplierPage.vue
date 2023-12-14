@@ -12,7 +12,7 @@
                 <img src="http://dillisix.com/storage/55/Amit.jpeg" style="height: 100px; width: 100px;">
                 <div class="">
                     <div class="">
-                        <p class="mb-0"><b>Name : </b>{{ fab.name }}</p>
+                        <p class="mb-0"> <b>Name : </b>{{ fab.name }}</p>
                         <p class="mb-0"> <b>Business Name : </b>{{ fab.business_name }}</p>
                         <p class="mb-0"> <b>Email : </b>{{ fab.email }}</p>
                     </div>

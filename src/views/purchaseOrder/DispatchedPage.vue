@@ -1,7 +1,7 @@
 <template>
     <div style="margin-bottom: 70px;">
         <FabFilter class="border-bottom"></FabFilter>
-        <p class="p-2 text-center mb-0 fw-bold bg-light">In Production</p>
+        <p class="p-2 text-center mb-0 bg-light bill"><span>~ In Production ~</span></p>
         <div v-if="Object.keys(InProduction).length" class="">
             <div v-for="(purchase, index) in InProduction" :key="index">
                 <div class="d-flex align-items-center justify-content-between p-1 border-bottom w-100">
@@ -31,8 +31,10 @@
                 </div>
             </div>
         </div>
-        <div v-else><p class="text-center bg-light">There is no order listed in Production</p></div>
-        <p class="p-2 text-center mb-0 fw-bold bg-light">For Delivery</p>
+        <div v-else>
+            <p class="text-center bg-light">There is no order listed in Production</p>
+        </div>
+        <p class="p-2 text-center mb-0 bg-light bill"><span>~ For Delivery ~</span></p>
         <div v-if="Object.keys(Deliverd).length" class="">
             <div v-for="(purchase, index) in Deliverd" :key="index">
                 <div class="d-flex align-items-center justify-content-between p-1 border-bottom w-100">
@@ -54,7 +56,7 @@
                     </router-link>
                     <div v-if="purchase.status === 'dispatched'" class="d-flex flex-column">
                         <button class="btn btn-outline-success mb-1" @click="updateStatus(purchase.sid)">Received</button>
-                        <button class="btn btn-outline-danger mt-1" @click="reject(purchase.sid)">Reject</button>
+                        <button class="btn btn-outline-danger mt-1 disable" @click="reject(purchase.sid)">Reject</button>
                     </div>
                     <!-- <div class="d-flex flex-column">
                     <button class="btn btn-outline-success mb-1" @click="received(purchase.sid)">Received</button>
@@ -63,7 +65,9 @@
                 </div>
             </div>
         </div>
-        <div v-else><p class="text-center bg-light">There is no order listed in Delivery</p></div>
+        <div v-else>
+            <p class="text-center bg-light">There is no order listed in Delivery</p>
+        </div>
         <div class="position-fixed bottom-0 text-center w-100">
             <PruchaseNav></PruchaseNav>
         </div>
@@ -75,9 +79,10 @@ import FabFilter from '@/components/Filter/FabFilter.vue';
 import PruchaseNav from '../../components/Navbar/PurchaseNav.vue';
 import axios from 'axios'
 import pusherApi from '@/mixing/pusherApi';
+import Swal from 'sweetalert2';
 
 export default {
-    mixins:[pusherApi],
+    mixins: [pusherApi],
     data() {
         return {
             status: 'live',
@@ -115,6 +120,15 @@ export default {
         updatePurchase(purchase) {
             axios.put('http://192.168.1.133:8001/api/purchases/' + purchase.sid, {
                 status: 'next'
+            }).then((response) => {
+                console.log('api response', response);
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Requested to Dispatched.',
+                    icon: 'success',
+                    confirmButtonColor: '#F48B29',
+                    confirmButtonText: 'OK'
+                })
             })
         },
         //     received(purchaseId) {
@@ -130,11 +144,30 @@ export default {
         //         this.updateStatus(purchaseId, data);
         //     },
         updateStatus(purchaseId) {
-            axios.put('http://192.168.1.133:8001/api/purchases/' + purchaseId, {
+            axios.put(`http://192.168.1.133:8001/api/purchases/${purchaseId}`, {
                 status: 'next'
             })
-
+                .then((response) => {
+                    console.log('api response', response);
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Purchase status updated successfully.',
+                        icon: 'success',
+                        confirmButtonColor: '#F48B29',
+                        confirmButtonText: 'OK'
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error updating status:', error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while updating the status. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
         },
+
         //     getStatusClass(status) {
         //         if (status === 'live') {
         //             return 'text-success';
@@ -145,7 +178,7 @@ export default {
         //     },
 
     },
-    created(){
+    created() {
         this.connect('fetchPurchase')
     },
     mounted() {

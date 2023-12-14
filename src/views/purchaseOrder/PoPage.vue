@@ -1,7 +1,7 @@
 <template>
     <div style="margin-bottom: 70px;">
         <FabFilter class="border-bottom"></FabFilter>
-        <p class="p-2 text-center mb-0 fw-bold bg-light">Issued Po</p>
+        <p class="p-2 text-center mb-0 bg-light bill"><span>~ Issued Po ~</span></p>
         <div v-if="Object.keys(issuedJobworks).length" class="">
             <div v-for="(jobwork, index) in issuedJobworks" :key="index">
                 <router-link :to="'/PoDetail/' + jobwork.sid" class="text-decoration-none text-dark ">
@@ -13,8 +13,8 @@
                         </div>
                         <div class="d-flex flex-column  justify-content-center">
                             <div class="d-flex ">
-                                <span class="fw-bold mx-2">{{ jobwork.jwoi }}</span>
-                                <span>|</span>
+                                <!-- <span class="fw-bold mx-2">{{ jobwork.jwoi }}</span> -->
+                                <!-- <span>|</span> -->
                                 <span class="mx-2">Qty : {{ jobwork.quantity }}</span>
                             </div>
                             <div class="mx-2">
@@ -28,7 +28,7 @@
         <div v-else>
             <p class="text-center bg-light">There is no product listed in the Issued PO.</p>
         </div>
-        <p class="p-2 text-center mb-0 fw-bold bg-light">Completed Po</p>
+        <p class="p-2 text-center mb-0 bg-light bill"><span>~ Completed Po ~</span></p>
         <div v-if="Object.keys(completedJobworks).length" class="">
             <div v-for="(jobwork, index) in completedJobworks" :key="index">
                 <router-link :to="'/PoDetail/' + jobwork.sid" class="text-decoration-none text-dark ">
@@ -40,8 +40,8 @@
                         </div>
                         <div class="d-flex flex-column  justify-content-center">
                             <div class="d-flex ">
-                                <span class="fw-bold mx-2">{{ jobwork.jwoi }}</span>
-                                <span>|</span>
+                                <!-- <span class="fw-bold mx-2">{{ jobwork.jwoi }}</span> -->
+                                <!-- <span>|</span> -->
                                 <span class="mx-2">Qty : {{ jobwork.quantity }}</span>
                             </div>
                             <div class="mx-2">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </router-link>
-                
+
 
             </div>
         </div>

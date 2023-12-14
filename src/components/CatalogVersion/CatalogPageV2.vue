@@ -7,9 +7,10 @@
                     <div class="card border ">
                         <router-link :to="'/CatalogDetails/' + stock.product.sid" class="text-decoration-none">
                             <div class="d-flex justify-content-end p-1">
-                                <Span class="border rounded-circle bg-success" style="height: 15px; width: 15px;"></Span>
+                                <Span class="border rounded-circle" :class="{ 'text-success': stock.active === true, 'text-warning': stock.active === null }"
+                                    style="height: 15px; width: 15px;"></Span>
                             </div>
-
+<!-- {{ stock.active }} -->
                             <div :id="'productImages' + index" class="carousel slide">
                                 <div class="carousel-inner">
                                     <div :id="'cardCarousel' + imgIndex" class="carousel-item"
@@ -32,7 +33,7 @@
 
 
                             <div class="d-flex justify-content-between p-1 mt-1 text-dark fw-bold">
-                                <p class="m-0" style="font-size: 0.75rem">{{ stock.product.sid }} </p>
+                                <p class="m-0 ss" style="font-size: 0.75rem">{{ stock.product.name }} </p>
                                 <p class="m-0" style="font-size: 0.75rem">{{ stock.stock }} pcs</p>
                             </div>
                         </router-link>
@@ -49,15 +50,14 @@
 import pusherApi from '@/mixing/pusherApi';
 
 export default {
-    mixins:[pusherApi],
+    mixins: [pusherApi],
     props: ['stock', 'design'],
     data() {
         return {
             publicPath: process.env.BASE_URL,
-
         }
     },
-    created(){
+    created() {
         this.connect('fetchStocks')
     },
     mounted() {
@@ -71,6 +71,7 @@ export default {
         //     return this.$store.getters.getLists;
         // },
         getStatus() {
+            
             return this.$store.getters.getStatus
         }
     },
@@ -121,4 +122,11 @@ export default {
     background-color: none;
     display: none;
 }
-</style>
+
+.ss {
+    width: 80px;
+    /* Set the width based on your requirements */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}</style>

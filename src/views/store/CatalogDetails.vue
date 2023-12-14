@@ -1,6 +1,6 @@
 <template>
-    <div class="container" style="padding-bottom: 80px;" v-if="dataReady">
-        <div class="fs-5 d-flex justify-content-between align-items-center">
+    <div class="container " style="padding-bottom: 80px;" v-if="dataReady">
+        <div class="fs-5 d-flex justify-content-between align-items-center my-3">
             <div class="">
                 <b>Status :</b> <span>{{ statusText }}</span>
             </div>
@@ -8,17 +8,14 @@
                 <input class="form-check-input" :checked="active" @change="toggleStatus" type="checkbox"
                     id="flexSwitchCheckChecked">
             </div>
-
-
         </div>
-        <button class="accordion-button collapsed text-white p-2 rounded-top-2 my-3"
-            style="background-color:  rgb(244, 139, 41);" type="button">
+        <button class="accordion-button collapsed border p-2 rounded-top-2 my-3 bg-light" type="button">
             <div class="d-flex justify-content-between w-100">
                 <div class="d-flex">
                     <img :src="dataSet.product.image"
                         style="height: 60px; width: 60px; object-fit: cover; object-position:top;" class="rounded-2">
                     <div class="mx-2">
-                        <b> {{ dataSet.product.sid }}</b>
+                        <b> {{ dataSet.product.name }}</b>
                     </div>
                 </div>
                 <div class="d-flex align-items-center ">
@@ -54,29 +51,29 @@
                 <table class="table table-bordered mt-3">
                     <tbody>
                         <tr>
-                            <th scope="row">
+                            <th class="w-50 bg-light" scope="row">
                                 <p class="mb-1" style="font-size: 14px">Total Amount :</p>
                             </th>
                             <td>
-                                <p class="mb-1" style="font-size: 14px">{{ dataSet.product.total }}</p>
+                                <p class="mb-1 text-center" style="font-size: 14px">{{ dataSet.product.total }}</p>
                             </td>
 
                         </tr>
                         <tr>
-                            <th scope="row">
+                            <th class="w-50 bg-light" scope="row">
                                 <p class="mb-1" style="font-size: 14px">Average Rate :</p>
                             </th>
                             <td>
-                                <p class="mb-1" style="font-size: 14px">876</p>
+                                <p class="mb-1 text-center" style="font-size: 14px">876</p>
                             </td>
 
                         </tr>
                         <tr>
-                            <th scope="row">
+                            <th class="w-50 bg-light" scope="row">
                                 <p class="mb-1" style="font-size: 14px">Total Pieces :</p>
                             </th>
                             <td>
-                                <p class="mb-1" style="font-size: 14px">7655</p>
+                                <p class="mb-1 text-center" style="font-size: 14px">7655</p>
                             </td>
 
                         </tr>
@@ -104,8 +101,7 @@
             </div>
         </div>
         <!-- -------------------------IMAGE-------------------- -->
-
-
+        <p class="m-0 fs-5 text-center bill mt-4"><span>~ Create Job Work Order ~</span></p>
         <ul class="nav nav-tabs d-flex justify-content-evenly my-3" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
@@ -128,9 +124,7 @@
             <!-- -----------QUICK------------------ -->
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="my-3">
-                    <p class="m-0 fs-5 text-center">Create Job Work Order</p>
-
-                    <form @submit.prevent="postData()" method="post">                                      
+                    <form @submit.prevent="postData()" method="post">
 
                         <div class="form-floating my-3">
                             <select class="form-select" id="floatingSelect" v-model="selectedFabricator">
@@ -145,36 +139,38 @@
                         </div> -->
                         <div class="form-floating my-3">
                             <select class="form-select">
-                                <option>{{ dataSet.product.sid }}</option>
+                                <option>{{ dataSet.product.name }}</option>
                                 <!-- Add other options here if needed -->
                             </select>
                             <label for="floatingSelect">Catalog</label>
                         </div>
 
                         <div class="form-floating my-3">
-                            <input type="number" class="form-control" id="floatingInput" v-model="quantity">
+                            <input required type="number" class="form-control" id="floatingInput" v-model="quantity">
                             <label for="floatingInput">Quantity</label>
                             <p class="text-muted m-0 my-2" style="font-size: 12px;">* Total quantity will split in equal
                                 propotion between all sizes and colors</p>
                         </div>
 
-                        <h4>Order Quantity</h4>
+
+                        <p class=" fs-5 bill text-center"><span>~ Actual Order Qty ~</span></p>
                         <div class="d-flex justify-content-between mb-3">
 
                             <div class="d-flex justify-content-between border container py-2 mx-1"
                                 style="background-color: #E8FFCE;">
-                                <p class=" mb-0">Actual</p>
                                 <p class=" fw-bold text-center mb-0">
                                     {{ calculateRegularSizeTotal() }} pcs
+                                    <!-- {{ calculateAdvanceSizeTotal() }} pcs -->
                                 </p>
+                                <p class=" mb-0">Roundoff </p>
                             </div>
-                            <div class="d-flex justify-content-between border container py-2 mx-1"
+                            <!-- <div class="d-flex justify-content-between border container py-2 mx-1"
                                 style="background-color: #FFE5AD;">
                                 <p class=" mb-0">Max</p>
                                 <p class=" fw-bold text-center mb-0">
                                     2538 pcs
                                 </p>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="form-floating mb-3">
@@ -183,11 +179,12 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control as" v-model="message" id="floatingTextarea"></textarea>
+                            <textarea required class="form-control as" v-model="message" id="floatingTextarea"></textarea>
                             <label for="floatingTextarea">Message</label>
                         </div>
 
-                        <button class="btn btn-outline-primary w-100" type="submit">Submit</button>
+                        <button @click="showAlert" class="btn text-white w-100" style="background-color: #F48B29;"
+                            type="submit">Submit</button>
 
                     </form>
                 </div>
@@ -208,7 +205,7 @@
 
                     <div class="form-floating my-3">
                         <select class="form-select">
-                            <option>{{ dataSet.product.sid }}</option>
+                            <option>{{ dataSet.product.name }}</option>
                             <!-- Add other options here if needed -->
                         </select>
                         <label for="floatingSelect">Catalog</label>
@@ -230,7 +227,7 @@
                             from the order</p>
 
                         <p class="m-0 fs-5 mt-1">Selected Sizes</p>
-                        <div class="d-flex justify-content-between flex-wrap mx-2">
+                        <div class="d-flex gap-2 flex-wrap ">
                             <div v-for="(size, index) in dataSet.product.ranges " :key="index" @click="toggleSize(size)"
                                 class="rounded my-2" style="width: 60px;"
                                 :style="{ border: size.isSelected ? '2px solid black' : 'none' }">
@@ -246,28 +243,28 @@
 
                         <div class="my-4">
                             <div class="form-floating my-3">
-                                <input type="number" class="form-control" id="floatingInput" v-model="quantity">
+                                <input required type="number" class="form-control" id="floatingInput" v-model="quantity">
                                 <label for="floatingInput">Quantity</label>
                                 <p class="text-muted m-0 my-2" style="font-size: 12px;">* Total quantity will split in equal
                                     propotion between all sizes and colors</p>
                             </div>
-
+                            <p class=" fs-5 bill text-center"><span>~ Actual Order Qty ~</span></p>
                             <div class="d-flex justify-content-between mb-3">
 
                                 <div class="d-flex justify-content-between border container py-2 mx-1"
                                     style="background-color: #E8FFCE;">
-                                    <p class=" mb-0">Actual</p>
                                     <p class=" fw-bold text-center mb-0">
-                                        {{ calculateRegularSizeTotal() }} pcs
+                                        {{ calculateAdvanceSizeTotal() }} pcs
                                     </p>
+                                    <p class=" mb-0">Roundoff</p>
                                 </div>
-                                <div class="d-flex justify-content-between border container py-2 mx-1"
+                                <!-- <div class="d-flex justify-content-between border container py-2 mx-1"
                                     style="background-color: #FFE5AD;">
                                     <p class=" mb-0">Max</p>
                                     <p class=" fw-bold text-center mb-0">
                                         2538 pcs
                                     </p>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="form-floating mb-3">
@@ -276,13 +273,15 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <textarea class="form-control as" v-model="message" id="floatingTextarea"></textarea>
+                                <textarea required class="form-control as" v-model="message"
+                                    id="floatingTextarea"></textarea>
                                 <label for="floatingTextarea">Message</label>
                             </div>
                         </div>
 
                         <div class="d-flex justify-content-center mt-3">
-                            <button class="btn btn-outline-primary w-100" type="submit">Submit</button>
+                            <button class="btn text-white w-100" style="background-color: #F48B29;"
+                                type="submit">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -304,13 +303,13 @@
 
                         <div class="form-floating my-3">
                             <select class="form-select">
-                                <option>{{ dataSet.product.sid }}</option>
+                                <option>{{ dataSet.product.name }}</option>
                                 <!-- Add other options here if needed -->
                             </select>
                             <label for="floatingSelect">Catalog</label>
                         </div>
 
-                        <p class="m-0 fs-5 text-center">Enter Your Order Quantity</p>
+                        <p class="m-0 fs-5 text-center bill"><span>~ Enter Your Order Quantity ~</span></p>
                         <div class="table-responsive mt-4" id="scroll">
                             <table class="table border border-1" style="background-color: #f8f9fa;">
                                 <thead>
@@ -344,22 +343,23 @@
 
                             </table>
                         </div>
+                        <p class=" fs-5 bill text-center"><span>~ Actual Order Qty ~</span></p>
                         <div class="d-flex justify-content-between mb-3">
 
                             <div class="d-flex justify-content-between border container py-2 mx-1"
                                 style="background-color: #E8FFCE;">
-                                <p class=" mb-0">Actual</p>
                                 <p class=" fw-bold text-center mb-0">
                                     {{ calculateRegularSizeTotal() }} pcs
                                 </p>
+                                <p class=" mb-0">Roundoff</p>
                             </div>
-                            <div class="d-flex justify-content-between border container py-2 mx-1"
+                            <!-- <div class="d-flex justify-content-between border container py-2 mx-1"
                                 style="background-color: #FFE5AD;">
                                 <p class=" mb-0">Max</p>
                                 <p class=" fw-bold text-center mb-0">
                                     2538 pcs
                                 </p>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="form-floating mb-3">
@@ -368,12 +368,13 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control as" v-model="message" id="floatingTextarea"></textarea>
+                            <textarea required class="form-control as" v-model="message" id="floatingTextarea"></textarea>
                             <label for="floatingTextarea">Message</label>
                         </div>
 
                         <div class="d-flex justify-content-center mt-3">
-                            <button class="btn btn-outline-primary w-100" type="submit">Submit</button>
+                            <button class="btn text-white w-100" style="background-color: #F48B29;"
+                                type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -399,7 +400,7 @@
                         <!-- --------------------CATALOG------------------- -->
                         <div class="form-floating my-3">
                             <select class="form-select">
-                                <option>{{ dataSet.product.sid }}</option>
+                                <option>{{ dataSet.product.name }}</option>
                                 <!-- Add other options here if needed -->
                             </select>
                             <label for="floatingSelect">Catalog</label>
@@ -407,7 +408,7 @@
                         <!-- --------------------CATALOG------------------- -->
 
                         <!-- --------------------Quantity------------------- -->
-                        <p class="m-0 fs-5 text-center">Enter Your Order Quantity</p>
+                        <p class="m-0 fs-5 text-center bill"><span>~ Enter Your Order Quantity ~</span></p>
                         <div class="table-responsive mt-4" id="scroll">
                             <table class="table border border-1" style="background-color: #f8f9fa;">
                                 <thead>
@@ -447,22 +448,23 @@
                         <!-- --------------------Quantity------------------- -->
 
                         <!-- --------------------Actual------------------- -->
+                        <p class=" fs-5 bill text-center"><span>~ Actual Order Qty ~</span></p>
                         <div class="d-flex justify-content-between mb-3">
 
                             <div class="d-flex justify-content-between border container py-2 mx-1"
                                 style="background-color: #E8FFCE;">
-                                <p class=" mb-0">Actual</p>
                                 <p class=" fw-bold text-center mb-0">
                                     {{ calculateAdvanceSizeTotal() }} pcs
                                 </p>
+                                <p class=" mb-0">Roundoff</p>
                             </div>
-                            <div class="d-flex justify-content-between border container py-2 mx-1"
+                            <!-- <div class="d-flex justify-content-between border container py-2 mx-1"
                                 style="background-color: #FFE5AD;">
                                 <p class=" mb-0">Max</p>
                                 <p class=" fw-bold text-center mb-0">
                                     2538 pcs
                                 </p>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- --------------------Actual------------------- -->
 
@@ -475,11 +477,12 @@
 
                         <!-- --------------------Message------------------- -->
                         <div class="form-floating mb-3">
-                            <textarea class="form-control as" v-model="message" id="floatingTextarea"></textarea>
+                            <textarea required class="form-control as" v-model="message" id="floatingTextarea"></textarea>
                             <label for="floatingTextarea">Message</label>
                         </div>
                         <!-- --------------------Message------------------- -->
-                        <button class="btn btn-outline-primary w-100" type="submit">Submit</button>
+                        <button class="btn text-white w-100" style="background-color: #F48B29;"
+                            type="submit">Submit</button>
                     </form>
                 </div>
             </div>
@@ -493,7 +496,6 @@
 // import { mapGetters } from 'vuex';
 import catalog from '@/mixing/catalog.js'
 import axios from 'axios';
-
 export default {
     mixins: [catalog],
     name: "CatalogDetails",
@@ -559,10 +561,9 @@ export default {
             const newData = {
                 active: this.active ? 'false' : 'true',
             };
-            try {
+            try { 
                 const response = await axios.put(url, newData);
-
-                if (response.data.status === 'ok') {
+                if (response.data.active === 'true') {
                     // Update 'active' based on the new status from the API
                     this.active = !this.active;
                 } else {
@@ -574,7 +575,7 @@ export default {
                 // You may want to handle errors and provide user feedback
             }
         },
-    }
+    },
 
 }
 </script>
@@ -604,9 +605,11 @@ textarea.form-control {
 }
 
 .nav-link {
-    color: #F48B29;
+    color: #000000;
 }
-
+.nav-tabs {
+    --bs-nav-tabs-link-active-color: #F48B29;
+}
 .form-check-input:checked {
     background-color: green;
     border-color: green;

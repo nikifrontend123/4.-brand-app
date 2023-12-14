@@ -1,9 +1,9 @@
 <template>
     <FabFilter class="border-bottom"></FabFilter>
-    <p class="p-2 text-center mb-0 fw-bold bg-light">Cutting</p>
-    <div v-if="Object.keys(filteredPurchases).length" style="margin-bottom: 70px;">
-        <div v-for="(purchase, index) in filteredPurchases" :key="index">
-            <div v-if="purchase.status === 'cutting'" class="d-flex align-items-center justify-content-between p-1 border-bottom w-100">
+    <p class="p-2 text-center mb-0 bg-light bill"><span>~ Cutting ~</span></p>
+    <div v-if="Object.keys(cuttingPo).length">
+        <div v-for="(purchase, index) in cuttingPo" :key="index">
+            <div class="d-flex align-items-center justify-content-between p-1 border-bottom w-100">
                 <router-link :to="'/PurchaseDetail/' + purchase.sid" class="text-decoration-none text-dark ">
                     <div class="d-flex align-items-center">
                         <div v-if="purchase.product.colors.length > 0">
@@ -53,15 +53,18 @@ export default {
         };
     },
     computed: {
-        filteredPurchases(){
+        filteredPurchases() {
             return this.$store.getters.getPurchases
-        }
+        },
         // filteredPurchases() {
         //     const purchases = this.$store.getters.getPurchases;
         //     return purchases.filter(purchase => {
         //         return purchase.status === 'cutting';
         //     });
-        // }
+        // },
+        cuttingPo(){
+            return this.filteredPurchases.filter(po => po.status === 'cutting')
+        }
     },
     methods: {
         //     received(purchaseId) {
@@ -98,7 +101,6 @@ export default {
                 status: 'next'
             })
         }
-
     },
     mounted() {
         this.$store.dispatch('fetchPurchase');
